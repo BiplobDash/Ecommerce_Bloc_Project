@@ -1,7 +1,9 @@
+import 'package:basic_bloc/src/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import '../widgets/exports.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -56,7 +58,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => context.pushNamed(Routes.LOGIN_ROUTE),
                     child: Text(
                       "SignIn",
                       style: theme.textTheme.labelLarge?.copyWith(
@@ -67,18 +69,10 @@ class WelcomeScreen extends StatelessWidget {
                 ],
               ),
               const Gap(15),
-              Container(
-                height: 80.h,
-                color: theme.colorScheme.onPrimaryContainer,
-                child: Center(
-                  child: Text(
-                    "Create An Account",
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.onSecondary,
-                    ),
-                  ),
-                ),
-              ),
+              FullWidthButton(
+                onTap: () => context.pushNamed(Routes.REGISTER_ROUTE),
+                title: "Create An Account",
+              )
             ],
           ),
         ],
