@@ -25,38 +25,68 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
 
-            Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      label: Text("Username"),
-                      labelStyle: theme.textTheme.labelMedium?.copyWith(
-                        color: theme.colorScheme.outlineVariant,
+            BlocBuilder<SignupBloc, SignupState>(builder: (context, state){
+              if(state is SignupInitial){
+                return Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: state.usernameController,
+                        decoration: InputDecoration(
+                          label: Text("Username"),
+                          labelStyle: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.outlineVariant,
+                          ),
+                        ),
+                        validator: (value){
+                          if(value == '' || value == null){
+                            return "Username is required";
+                          }else {
+                            return null;
+                          }
+                        },
                       ),
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      label: Text("Email"),
-                      labelStyle: theme.textTheme.labelMedium?.copyWith(
-                        color: theme.colorScheme.outlineVariant,
+                      TextFormField(
+                        controller: state.emailController,
+                        decoration: InputDecoration(
+                          label: Text("Email"),
+                          labelStyle: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.outlineVariant,
+                          ),
+                        ),
+                        validator: (value){
+                          if(value == '' || value == null){
+                            return "Email is required";
+                          }else {
+                            return null;
+                          }
+                        },
                       ),
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      label: Text("Password"),
-                      labelStyle: theme.textTheme.labelMedium?.copyWith(
-                        color: theme.colorScheme.outlineVariant,
+                      TextFormField(
+                        controller: state.passwordController,
+                        decoration: InputDecoration(
+                          label: Text("Password"),
+                          labelStyle: theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.outlineVariant,
+                          ),
+                        ),
+                        validator: (value){
+                          if(value == '' || value == null){
+                            return "Password is required";
+                          }else {
+                            return null;
+                          }
+                        },
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                );
+              }else{
+                return Container();
+              }
+            }),
             const Gap(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,7 +109,11 @@ class SignupScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: FullWidthButton(title: "Sign Up"),
+      bottomNavigationBar: FullWidthButton(title: "Sign Up", onTap: (){
+        if(formKey.currentState!.validate()){
+
+        }
+      },),
     );
   }
 }
